@@ -1,4 +1,4 @@
-FROM php:7.2.7
+FROM php:7.2-cli
 
 MAINTAINER Jonathan Bernardi <jon@jonbernardi.com>
 
