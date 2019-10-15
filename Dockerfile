@@ -1,4 +1,4 @@
-FROM php:7.2.7
+FROM php:7.3-cli
 
 MAINTAINER Jonathan Bernardi <jon@jonbernardi.com>
 
@@ -19,7 +19,7 @@ RUN apt-get update && \
 # PHP Extensions
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install \
-        gd pdo pdo_mysql
+        gd pdo pdo_mysql pcntl bcmath
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
