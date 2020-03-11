@@ -1,4 +1,4 @@
-FROM php:7.3-cli
+FROM php:7.4-cli
 
 MAINTAINER Jonathan Bernardi <jon@jonbernardi.com>
 
@@ -17,7 +17,7 @@ RUN apt-get update && \
     && apt-get --purge autoremove -y
 
 # PHP Extensions
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         gd pdo pdo_mysql pcntl bcmath
 
