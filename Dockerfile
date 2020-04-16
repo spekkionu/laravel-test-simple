@@ -14,13 +14,16 @@ RUN apt-get update && \
     libjpeg62-turbo-dev \
     libpng-dev \
     libicu-dev \
+    libc-client-dev \
+    libkrb5-dev \
     --no-install-recommends && rm -r /var/lib/apt/lists/* \
     && apt-get --purge autoremove -y
 
 # PHP Extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install \
-        gd pdo pdo_mysql intl pcntl bcmath
+        gd pdo pdo_mysql intl pcntl bcmath imap
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
