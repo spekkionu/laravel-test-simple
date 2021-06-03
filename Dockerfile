@@ -16,6 +16,10 @@ RUN apt-get update && \
     libicu-dev \
     libc-client-dev \
     libkrb5-dev \
+    libtidy-dev \
+    libxml2-dev \
+    libxslt-dev \
+    libzip-dev \
     --no-install-recommends && rm -r /var/lib/apt/lists/* \
     && apt-get --purge autoremove -y
 
@@ -23,7 +27,7 @@ RUN apt-get update && \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install \
-        gd pdo pdo_mysql intl pcntl bcmath imap
+        gd pdo pdo_mysql intl pcntl bcmath imap shmop soap sockets tidy xml xsl zip
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
