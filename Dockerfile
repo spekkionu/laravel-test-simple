@@ -2,7 +2,10 @@ FROM php:8.0-cli
 
 MAINTAINER Jonathan Bernardi <jon@jonbernardi.com>
 
-RUN apt-get update && \
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    apt-get update && \
     apt-get upgrade -y && \
     apt-get dist-upgrade -y && \
     apt-get install -qy \
@@ -10,27 +13,19 @@ RUN apt-get update && \
     curl \
     wget \
     unzip \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    libicu-dev \
-    libc-client-dev \
-    libkrb5-dev \
-    libtidy-dev \
-    libxml2-dev \
-    libxslt-dev \
-    libzip-dev \
-    --no-install-recommends && rm -r /var/lib/apt/lists/* \
-    && apt-get --purge autoremove -y
+    --no-install-recommends && \
+    rm -r /var/lib/apt/lists/* && \
+    apt-get --purge autoremove -y
 
 # PHP Extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-    && docker-php-ext-install \
-        gd pdo pdo_mysql intl pcntl bcmath imap shmop soap sockets tidy xml xsl zip
+RUN install-php-extensions \
+        bcmath gd pdo pdo_mysql imagick intl pcntl bcmath imap \
+        redis shmop soap sockets ssh2 tidy xml xsl zip
+
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 
 RUN apt-get clean -y && \
 		apt-get autoremove -y && \
