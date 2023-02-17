@@ -1,4 +1,4 @@
-FROM php:8.1-cli
+FROM php:8.2-cli
 
 MAINTAINER Jonathan Bernardi <jon@jonbernardi.com>
 
@@ -19,7 +19,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 
 # PHP Extensions
 RUN install-php-extensions \
-        bcmath gd pdo pdo_mysql imagick intl pcntl bcmath imap \
+        bcmath gd pdo_mysql imagick intl pcntl imap \
         redis shmop soap sockets ssh2 tidy xml xsl zip
 
 
